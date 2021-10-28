@@ -1,7 +1,7 @@
 # string-boot-cheatsheet
 
 ## Database Migration
-Springboot can work with **Hibernate**(ORM library) to create database tables from `JPA Entity` classes. However, it doesn't have database migration management. As It doesn't generate migration script, to track db changes is impossible. So, alternatives of this library are **Liquibase** , **Flyway**. 
+Springboot can work with **Hibernate**(ORM library) to create database tables from `JPA Entity` classes. However, it doesn't have database migration management. As it doesn't generate migration script, tracking db changes is impossible. So, alternatives of this library are **Liquibase** , **Flyway**. 
 
 ## Liquibase
 Steps:
@@ -29,4 +29,19 @@ Steps:
             </plugin>
         </plugins>
     </build>
+```
+2. create folder `db\changelog` inside project `resources` folder. Migration scripts will be reside in  `changelog` folder. Now we will follow [liquibase best practice](https://www.liquibase.org/get-started/best-practices) where there will be a root configuration file `changelog-root.xml` (choose any name) that manages all migration files.
+```xml
+     <?xml version="1.0" encoding="UTF-8"?>
+     <databaseChangeLog
+          xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xmlns:pro="http://www.liquibase.org/xml/ns/pro"
+          xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+          http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.1.xsd
+          http://www.liquibase.org/xml/ns/pro
+          http://www.liquibase.org/xml/ns/pro/liquibase-pro-4.1.xsd">
+          <!-- path specifies changelog file's location -->
+          <includeAll path="db/changelog/changes/"/>
+     </databaseChangeLog>
 ```
